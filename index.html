@@ -65,6 +65,12 @@ h1 span{color:#ffe2bd;text-shadow:0 0 3px #fff3,0 0 8px var(--y),0 0 18px var(--
 .card.claimed .img,.card.claimed h3,.card.claimed p,.card.claimed .meta{opacity:.38}
 .card.claimed h3{text-decoration:line-through;text-decoration-color:var(--y);text-decoration-thickness:2px}
 .stamp{position:absolute;top:16px;right:-38px;transform:rotate(35deg);background:var(--y);color:#1a0d00;font-weight:800;font-size:12px;letter-spacing:.14em;padding:5px 46px;box-shadow:0 4px 18px #0008}
+.del{margin-top:4px;width:100%}
+.del.warn{border-color:#ff6a00;color:#ffb24d}
+.chk{display:flex;gap:8px;align-items:center;font-size:14px;color:var(--dim);margin:0 0 6px}
+.chk input{width:auto;margin:0}
+dialog .row input{flex:1;min-width:0}
+.banner .btn.sm{white-space:nowrap}
 .multi{font-size:14px;color:#ffd9a8;border:1px dashed #5a3410;border-radius:12px;padding:10px 12px;text-align:center}
 .mine{font-size:14px;color:var(--y);display:flex;align-items:center;justify-content:space-between;gap:8px}
 .empty{border:1px dashed #2a2a2a;border-radius:18px;padding:40px 20px;text-align:center;color:var(--dim)}
@@ -111,6 +117,34 @@ dialog .row{display:flex;gap:10px}
   </div>
 </dialog>
 
+<dialog id="dlgCode">
+  <h2>Lijst beheren</h2>
+  <p>Vul je beheercode in. Die wordt op dit toestel onthouden.</p>
+  <input id="codeInput" autocomplete="off" autocapitalize="characters" placeholder="XXXXX-XXXXX-XXXXX-XXXXX">
+  <p id="codeMsg" style="color:#ff8a65;margin:-6px 0 12px"></p>
+  <div class="row">
+    <button class="btn g" id="codeCancel">Annuleer</button>
+    <button class="btn y" id="codeOk">Inloggen</button>
+  </div>
+</dialog>
+
+<dialog id="dlgAdd">
+  <h2>Wens toevoegen</h2>
+  <form id="addForm" onsubmit="return false">
+    <input name="titel" maxlength="120" placeholder="Wat wil je hebben? *" required>
+    <input name="omschrijving" maxlength="500" placeholder="Korte omschrijving (optioneel)">
+    <div class="row"><input name="prijs" maxlength="40" placeholder="Prijs, bijv. € 25"><input name="winkel" maxlength="60" placeholder="Winkel"></div>
+    <input name="link" type="url" placeholder="Link naar de winkel (https://…)">
+    <input name="afbeelding" type="url" placeholder="Link naar een plaatje (optioneel)">
+    <label class="chk"><input type="checkbox" name="afstrepen" checked> Mag afgestreept worden (uitvinken = mag vaker)</label>
+  </form>
+  <p id="addMsg" style="color:#ff8a65;margin:0 0 12px"></p>
+  <div class="row">
+    <button class="btn g" id="addCancel">Annuleer</button>
+    <button class="btn y" id="addOk">Toevoegen</button>
+  </div>
+</dialog>
+
 <dialog id="dlgClaim">
   <h2>Ik geef dit</h2>
   <p id="claimText"></p>
@@ -133,7 +167,7 @@ const store = {
 };
 const gift = '<svg viewBox="0 0 64 64"><g fill="none" stroke="#E9B400" stroke-width="3"><rect x="10" y="26" width="44" height="28" rx="4"/><rect x="6" y="18" width="52" height="10" rx="3"/><path d="M32 18v36M32 18c-4-10-16-10-14-2 1 3 8 2 14 2zm0 0c4-10 16-10 14-2-1 3-8 2-14 2z"/></g></svg>';
 
-let people = [], list = null, data = null, claimed = {}, mode = 'guest', pending = null;
+let people = [], list = null, data = null, baseItems = [], claimed = {}, mode = 'guest', pending = null, admin = false;
 
 function toast(t) { const el = $('#toast'); el.textContent = t; el.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove('on'), 2600); }
 
@@ -153,12 +187,23 @@ async function load() {
   nav.hidden = people.length < 2;
   nav.innerHTML = people.map(x => `<a href="#${esc(x.id)}" class="${x.id === list ? 'on' : ''}">${esc(x.naam)}</a>`).join('');
   data = await fetch(`lijsten/${encodeURIComponent(list)}.json`, { cache: 'no-cache' }).then(r => r.json());
+  baseItems = data.items || [];
+  await loadExtra();
+  admin = !!store.get('admin:code', '');
   document.title = `${data.titel || 'Verlanglijst van ' + data.naam}`;
   $('#title').innerHTML = `Verlanglijst<br>van <span>${esc(data.naam)}</span>`;
   $('#intro').textContent = data.intro || '';
   mode = store.get('mode:' + list, null);
   if (!mode) askWho(); else render();
   refresh();
+}
+
+async function loadExtra() {
+  try {
+    const j = await fetch(`${API}/extra?list=${encodeURIComponent(list)}`).then(r => r.json());
+    const hidden = new Set(j.hidden || []);
+    data.items = baseItems.filter(i => !hidden.has(i.id)).concat(j.items || []);
+  } catch { data.items = baseItems; }
 }
 
 function askWho() {
@@ -169,7 +214,7 @@ function askWho() {
   render();
   $('#dlgWho').showModal();
 }
-function setMode(m) { mode = m; store.set('mode:' + list, m); render(); }
+function setMode(m) { mode = m; store.set('mode:' + list, m); if (m === 'guest') admin = false; else admin = !!store.get('admin:code', ''); render(); }
 
 async function refresh() {
   try {
@@ -191,9 +236,12 @@ function render() {
     (owner ? '' : `<span class="pill"><b>${items.length - nClaimed}</b> nog vrij</span>`);
 
   $('#banner').innerHTML = owner
-    ? `<div class="banner"><span>🎁 <b>Verrassingsmodus</b> — je ziet niet wat er al is afgestreept.</span><span class="sp"></span><button class="btn g sm" id="toGuest">Ik ben niet ${esc(data.naam)}</button></div>`
+    ? `<div class="banner"><span>🎁 <b>Verrassingsmodus</b> — je ziet niet wat er al is afgestreept.</span><span class="sp"></span>${admin ? '<button class="btn y sm" id="addBtn">＋ Wens toevoegen</button><button class="btn g sm" id="adminOff">Klaar met beheren</button>' : '<button class="btn g sm" id="adminOn">✏️ Lijst beheren</button>'}<button class="btn g sm" id="toGuest">Ik ben niet ${esc(data.naam)}</button></div>`
     : '';
   const tg = $('#toGuest'); if (tg) tg.onclick = () => setMode('guest');
+  const ao = $('#adminOn'); if (ao) ao.onclick = () => { $('#codeInput').value = ''; $('#codeMsg').textContent = ''; $('#dlgCode').showModal(); };
+  const af = $('#adminOff'); if (af) af.onclick = () => { store.set('admin:code', ''); admin = false; render(); };
+  const ab = $('#addBtn'); if (ab) ab.onclick = () => { $('#addForm').reset(); $('#addMsg').textContent = ''; $('#dlgAdd').showModal(); };
   $('#whoSwitch').hidden = owner;
   $('#whoSwitch').textContent = `Ben jij ${data.naam}? Verberg wat er al gekocht is`;
 
@@ -224,12 +272,28 @@ function render() {
         </div>
         ${(i.ook||[]).length ? `<div class="alt">Ook bij: ${i.ook.map(o => `<a href="${esc(o.link)}" target="_blank" rel="noopener">${esc(o.winkel)}${o.prijs ? ' (' + esc(o.prijs) + ')' : ''}</a>`).join(' · ')}</div>` : ''}
         ${action}
+        ${admin && owner ? `<button class="btn g sm del" data-del="${esc(i.id)}">🗑 Verwijderen</button>` : ''}
       </div>
     </article>`;
   }).join('');
 
   document.querySelectorAll('[data-claim]').forEach(b => b.onclick = () => openClaim(b.dataset.claim));
   document.querySelectorAll('[data-un]').forEach(b => b.onclick = () => unclaim(b.dataset.un, b));
+  document.querySelectorAll('[data-del]').forEach(b => b.onclick = () => removeItem(b.dataset.del, b));
+}
+
+async function adminCall(path, body) {
+  const r = await fetch(`${API}/admin/${path}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code: store.get('admin:code', ''), list, ...body }) });
+  const j = await r.json().catch(() => ({}));
+  if (r.status === 403) { store.set('admin:code', ''); admin = false; render(); }
+  return { ok: r.ok, ...j };
+}
+
+async function removeItem(id, btn) {
+  if (!btn.dataset.sure) { btn.dataset.sure = '1'; btn.textContent = 'Zeker weten? Tik nog een keer'; btn.classList.add('warn'); setTimeout(() => { if (btn.isConnected) { delete btn.dataset.sure; btn.textContent = '🗑 Verwijderen'; btn.classList.remove('warn'); } }, 4000); return; }
+  btn.disabled = true;
+  const j = await adminCall('remove', { id });
+  if (j.ok) { toast('Verwijderd'); await loadExtra(); render(); } else toast(j.error || 'Verwijderen mislukt');
 }
 
 function openClaim(id) {
@@ -240,6 +304,27 @@ function openClaim(id) {
   $('#dlgClaim').showModal();
 }
 $('#whoSwitch').onclick = () => { setMode('owner'); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+$('#codeCancel').onclick = () => $('#dlgCode').close();
+$('#codeOk').onclick = async () => {
+  const code = $('#codeInput').value.trim().toUpperCase();
+  if (!code) return;
+  store.set('admin:code', code);
+  const j = await adminCall('check', {});
+  if (j.ok) { admin = true; $('#dlgCode').close(); toast('Beheermodus aan'); render(); }
+  else { $('#codeMsg').textContent = 'Die code klopt niet.'; }
+};
+$('#addCancel').onclick = () => $('#dlgAdd').close();
+$('#addOk').onclick = async () => {
+  const f = $('#addForm');
+  if (!f.titel.value.trim()) { $('#addMsg').textContent = 'Vul in elk geval een titel in.'; return; }
+  const link = f.link.value.trim(), img = f.afbeelding.value.trim();
+  if ((link && !/^https:\/\//i.test(link)) || (img && !/^https:\/\//i.test(img))) { $('#addMsg').textContent = 'Links moeten met https:// beginnen.'; return; }
+  const btn = $('#addOk'); btn.disabled = true;
+  const j = await adminCall('add', { item: { titel: f.titel.value, omschrijving: f.omschrijving.value, prijs: f.prijs.value, winkel: f.winkel.value, link, afbeelding: img, afstrepen: f.afstrepen.checked } });
+  btn.disabled = false;
+  if (j.ok) { $('#dlgAdd').close(); toast('Toegevoegd! 🎁'); await loadExtra(); render(); }
+  else $('#addMsg').textContent = j.error || 'Toevoegen mislukt';
+};
 $('#claimCancel').onclick = () => $('#dlgClaim').close();
 $('#claimOk').onclick = async () => {
   const btn = $('#claimOk'); btn.disabled = true;
