@@ -68,6 +68,16 @@
       ],
       "afbeelding": "https://image.coolblue.nl/max/700xauto/products/47752624",
       "prio": 0
+    },
+    {
+      "id": "lego-technic-volvo-ec500",
+      "titel": "LEGO Technic Volvo EC500 Hybrid graafmachine (42215)",
+      "omschrijving": "Flinke bouwmachine van 2.359 onderdelen met werkende mechanieken. Gaat binnenkort uit de handel, dus nu ruim 30% goedkoper dan de adviesprijs (€ 399,99).",
+      "prijs": "± € 279",
+      "winkel": "Prijsvergelijker (Amazon.nl / Coolblue)",
+      "link": "https://brickfact.com/nl-nl/sets/lego-technic-volvo-ec500-hybrid-graafmachine-42215",
+      "afbeelding": "https://image-cdn.brickfact.com/set-images-fit-without-alpha/42215_1_fit.webp",
+      "prio": 1
     }
   ]
 }
