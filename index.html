@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cadeau-inator · LEDJOCKEY</title>
+<meta name="description" content="Verlanglijst met afstrepen — powered by LEDJOCKEY">
+<meta name="theme-color" content="#050505">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<meta property="og:title" content="Verlanglijst · Cadeau-inator">
+<meta property="og:description" content="Kijk wat er op de lijst staat en streep af wat jij geeft.">
+<meta property="og:image" content="icons/icon-512.png">
+<style>
+:root{
+  --y:#E9B400; --y2:#ffcf33; --bg:#050505; --panel:#0e0e0e; --line:#1d1d1d; --txt:#f2f2f2; --dim:#9a9a9a;
+  --font:"Myriad Pro",Myriad,"Segoe UI","Helvetica Neue",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--txt);font-family:var(--font);-webkit-font-smoothing:antialiased}
+body{min-height:100vh;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cg fill='none' stroke='%23E9B400' stroke-opacity='.07' stroke-width='2'%3E%3Cpath d='M0 40h60l20 20h80M240 40h-40M120 0v30l20 20v50l-20 20v120M0 160h40l20-20h60M240 200h-70l-20-20v-40M200 0v80l20 20h20'/%3E%3C/g%3E%3Cg fill='%23E9B400' fill-opacity='.10'%3E%3Ccircle cx='160' cy='60' r='5'/%3E%3Ccircle cx='60' cy='140' r='5'/%3E%3Ccircle cx='120' cy='30' r='4'/%3E%3Ccircle cx='150' cy='140' r='5'/%3E%3Ccircle cx='220' cy='100' r='4'/%3E%3C/g%3E%3C/svg%3E");background-attachment:fixed}
+a{color:var(--y)}
+.wrap{max-width:1100px;margin:0 auto;padding:22px 18px 80px}
+header{display:flex;align-items:center;gap:12px;margin-bottom:26px}
+header svg{width:38px;height:38px;flex:none}
+.brand{font-weight:700;letter-spacing:.14em;font-size:13px;color:var(--y);text-transform:uppercase}
+.brand small{display:block;color:var(--dim);letter-spacing:.08em;font-weight:400;font-size:11px;margin-top:2px}
+.share{margin-left:auto}
+h1{font-size:clamp(34px,7vw,64px);line-height:.95;margin:0 0 10px;text-transform:uppercase;letter-spacing:-.01em}
+h1 span{color:var(--y)}
+.intro{color:var(--dim);max-width:640px;font-size:17px;line-height:1.45;margin:0 0 18px}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px}
+.pill{border:1px solid var(--line);background:#0b0b0b;border-radius:999px;padding:6px 12px;font-size:13px;color:var(--dim)}
+.pill b{color:var(--txt)}
+.banner{border:1px solid #3a2f00;background:linear-gradient(90deg,#1a1400,#0b0b0b);border-radius:14px;padding:12px 14px;margin-bottom:20px;font-size:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.banner b{color:var(--y)}
+.banner .sp{flex:1}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.card{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:transform .15s,border-color .15s}
+.card:hover{border-color:#2c2c2c;transform:translateY(-2px)}
+.card .img{aspect-ratio:4/3;background:#090909;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--line);overflow:hidden}
+.card .img img{width:100%;height:100%;object-fit:contain;background:#fff}
+.card .img svg{width:64px;height:64px;opacity:.35}
+.card .body{padding:14px 15px 15px;display:flex;flex-direction:column;gap:8px;flex:1}
+.card h3{margin:0;font-size:19px;line-height:1.2}
+.card p{margin:0;color:var(--dim);font-size:14px;line-height:1.4}
+.meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:auto;padding-top:6px}
+.price{background:var(--y);color:#000;font-weight:700;border-radius:8px;padding:3px 9px;font-size:14px}
+.tag{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--y);border:1px solid #3a2f00;border-radius:6px;padding:2px 7px}
+.shop{font-size:14px;text-decoration:none;margin-left:auto}
+.shop:hover{text-decoration:underline}
+.btn{appearance:none;border:0;border-radius:12px;padding:12px 14px;font:inherit;font-weight:700;font-size:15px;cursor:pointer;width:100%;letter-spacing:.02em}
+.btn.y{background:var(--y);color:#000}
+.btn.y:hover{background:var(--y2)}
+.btn.g{background:#191919;color:var(--txt);border:1px solid #2a2a2a}
+.btn.sm{width:auto;padding:8px 12px;font-size:13px;border-radius:10px}
+.btn:disabled{opacity:.5;cursor:default}
+.card.claimed .img,.card.claimed h3,.card.claimed p,.card.claimed .meta{opacity:.38}
+.card.claimed h3{text-decoration:line-through;text-decoration-color:var(--y);text-decoration-thickness:2px}
+.stamp{position:absolute;top:16px;right:-38px;transform:rotate(35deg);background:var(--y);color:#000;font-weight:800;font-size:12px;letter-spacing:.14em;padding:5px 46px;box-shadow:0 4px 18px #0008}
+.mine{font-size:14px;color:var(--y);display:flex;align-items:center;justify-content:space-between;gap:8px}
+.empty{border:1px dashed #2a2a2a;border-radius:18px;padding:40px 20px;text-align:center;color:var(--dim)}
+footer{margin-top:40px;color:#5c5c5c;font-size:12px;letter-spacing:.12em;text-transform:uppercase;text-align:center}
+footer b{color:var(--y)}
+dialog{border:1px solid #2a2a2a;background:#0d0d0d;color:var(--txt);border-radius:20px;padding:22px;max-width:420px;width:calc(100% - 32px)}
+dialog::backdrop{background:#000b;backdrop-filter:blur(3px)}
+dialog h2{margin:0 0 8px;font-size:24px;text-transform:uppercase}
+dialog p{color:var(--dim);margin:0 0 16px;line-height:1.45}
+dialog input{width:100%;padding:12px;border-radius:12px;border:1px solid #2a2a2a;background:#080808;color:var(--txt);font:inherit;margin-bottom:14px}
+dialog .row{display:flex;gap:10px}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(120px);background:var(--y);color:#000;font-weight:700;padding:12px 18px;border-radius:12px;transition:transform .25s;z-index:9;max-width:90vw;text-align:center}
+.toast.on{transform:translateX(-50%) translateY(0)}
+.people{display:flex;gap:8px;flex-wrap:wrap;margin:-8px 0 22px}
+.people a{text-decoration:none;font-size:14px;border:1px solid var(--line);border-radius:999px;padding:6px 12px;color:var(--dim)}
+.people a.on{border-color:var(--y);color:var(--y)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="6" width="52" height="52" rx="12" fill="#E9B400"/><path d="M26 20v24l19-12z" fill="#050505"/><g fill="#050505"><circle cx="15" cy="15" r="2.6"/><circle cx="49" cy="15" r="2.6"/><circle cx="15" cy="49" r="2.6"/><circle cx="49" cy="49" r="2.6"/></g></svg>
+    <div class="brand">Cadeau-inator<small>by LEDJOCKEY</small></div>
+    <button class="btn g sm share" id="share">Deel lijst</button>
+  </header>
+
+  <nav class="people" id="people" hidden></nav>
+  <h1 id="title">Verlang<span>lijst</span></h1>
+  <p class="intro" id="intro"></p>
+  <div class="stats" id="stats"></div>
+  <div id="banner"></div>
+  <main class="grid" id="grid"></main>
+
+  <footer>Powered by <b>LEDJOCKEY</b></footer>
+</div>
+
+<dialog id="dlgWho">
+  <h2>Even checken</h2>
+  <p id="whoText"></p>
+  <div class="row">
+    <button class="btn g" id="whoOwner"></button>
+    <button class="btn y" id="whoGuest">Nee, ik zoek een cadeau</button>
+  </div>
+</dialog>
+
+<dialog id="dlgClaim">
+  <h2>Ik geef dit</h2>
+  <p id="claimText"></p>
+  <input id="claimName" maxlength="40" placeholder="Je naam (optioneel)" autocomplete="name">
+  <div class="row">
+    <button class="btn g" id="claimCancel">Annuleer</button>
+    <button class="btn y" id="claimOk">Afstrepen</button>
+  </div>
+</dialog>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API = 'https://cadeau-inator.jimmyhonderd.workers.dev';
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
+};
+const gift = '<svg viewBox="0 0 64 64"><g fill="none" stroke="#E9B400" stroke-width="3"><rect x="10" y="26" width="44" height="28" rx="4"/><rect x="6" y="18" width="52" height="10" rx="3"/><path d="M32 18v36M32 18c-4-10-16-10-14-2 1 3 8 2 14 2zm0 0c4-10 16-10 14-2-1 3-8 2-14 2z"/></g></svg>';
+
+let people = [], list = null, data = null, claimed = {}, mode = 'guest', pending = null;
+
+function toast(t) { const el = $('#toast'); el.textContent = t; el.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove('on'), 2600); }
+
+async function boot() {
+  people = await fetch('lijsten/index.json', { cache: 'no-cache' }).then(r => r.json()).catch(() => []);
+  window.addEventListener('hashchange', load);
+  load();
+}
+
+async function load() {
+  const want = location.hash.replace('#', '').toLowerCase();
+  const p = people.find(x => x.id === want) || people[0];
+  if (!p) { $('#grid').innerHTML = '<div class="empty">Nog geen lijsten.</div>'; return; }
+  if (location.hash.replace('#', '') !== p.id) history.replaceState(null, '', '#' + p.id);
+  list = p.id;
+  const nav = $('#people');
+  nav.hidden = people.length < 2;
+  nav.innerHTML = people.map(x => `<a href="#${esc(x.id)}" class="${x.id === list ? 'on' : ''}">${esc(x.naam)}</a>`).join('');
+  data = await fetch(`lijsten/${encodeURIComponent(list)}.json`, { cache: 'no-cache' }).then(r => r.json());
+  document.title = `${data.titel || 'Verlanglijst van ' + data.naam} · Cadeau-inator`;
+  $('#title').innerHTML = `Verlanglijst<br>van <span>${esc(data.naam)}</span>`;
+  $('#intro').textContent = data.intro || '';
+  mode = store.get('mode:' + list, null);
+  if (!mode) askWho(); else render();
+  refresh();
+}
+
+function askWho() {
+  $('#whoText').textContent = `Ben jij ${data.naam}? Dan laten we niet zien wat er al gekocht is, zodat het een verrassing blijft.`;
+  $('#whoOwner').textContent = `Ja, ik ben ${data.naam}`;
+  $('#whoOwner').onclick = () => { setMode('owner'); $('#dlgWho').close(); };
+  $('#whoGuest').onclick = () => { setMode('guest'); $('#dlgWho').close(); };
+  render();
+  $('#dlgWho').showModal();
+}
+function setMode(m) { mode = m; store.set('mode:' + list, m); render(); }
+
+async function refresh() {
+  try {
+    const r = await fetch(`${API}/claims?list=${encodeURIComponent(list)}`);
+    const j = await r.json();
+    claimed = j.claimed || {};
+  } catch { claimed = {}; }
+  render();
+}
+
+function render() {
+  if (!data) return;
+  const items = [...(data.items || [])].sort((a, b) => (a.prio ?? 9) - (b.prio ?? 9));
+  const owner = mode === 'owner';
+  const mine = store.get('mine', {});
+  const nClaimed = items.filter(i => claimed[i.id]).length;
+
+  $('#stats').innerHTML = `<span class="pill"><b>${items.length}</b> ${items.length === 1 ? 'wens' : 'wensen'}</span>` +
+    (owner ? '' : `<span class="pill"><b>${items.length - nClaimed}</b> nog vrij</span>`);
+
+  $('#banner').innerHTML = owner
+    ? `<div class="banner"><span>🎁 <b>Verrassingsmodus</b> — je ziet niet wat er al is afgestreept.</span><span class="sp"></span><button class="btn g sm" id="toGuest">Ik ben niet ${esc(data.naam)}</button></div>`
+    : '';
+  const tg = $('#toGuest'); if (tg) tg.onclick = () => setMode('guest');
+
+  if (!items.length) { $('#grid').innerHTML = '<div class="empty">De lijst wordt nog gevuld. Kom snel terug!</div>'; return; }
+
+  $('#grid').innerHTML = items.map(i => {
+    const isClaimed = !owner && !!claimed[i.id];
+    const isMine = !!mine[list + '/' + i.id];
+    const img = i.afbeelding ? `<img src="${esc(i.afbeelding)}" alt="" loading="lazy" onerror="this.replaceWith(document.createRange().createContextualFragment(gift))">` : gift;
+    let action = '';
+    if (!owner) {
+      if (isClaimed && isMine) action = `<div class="mine"><span>✓ Jij geeft dit</span><button class="btn g sm" data-un="${esc(i.id)}">Toch niet</button></div>`;
+      else if (isClaimed) action = `<button class="btn g" disabled>Wordt al gegeven</button>`;
+      else action = `<button class="btn y" data-claim="${esc(i.id)}">Ik geef dit</button>`;
+    }
+    return `<article class="card ${isClaimed ? 'claimed' : ''}">
+      ${isClaimed ? '<div class="stamp">AFGESTREEPT</div>' : ''}
+      <div class="img">${img}</div>
+      <div class="body">
+        <h3>${esc(i.titel)}</h3>
+        ${i.omschrijving ? `<p>${esc(i.omschrijving)}</p>` : ''}
+        <div class="meta">
+          ${i.prijs ? `<span class="price">${esc(i.prijs)}</span>` : ''}
+          ${i.voorbeeld ? '<span class="tag">Voorbeeld</span>' : ''}
+          ${i.link ? `<a class="shop" href="${esc(i.link)}" target="_blank" rel="noopener">Bekijk ›</a>` : ''}
+        </div>
+        ${action}
+      </div>
+    </article>`;
+  }).join('');
+
+  document.querySelectorAll('[data-claim]').forEach(b => b.onclick = () => openClaim(b.dataset.claim));
+  document.querySelectorAll('[data-un]').forEach(b => b.onclick = () => unclaim(b.dataset.un, b));
+}
+
+function openClaim(id) {
+  const it = data.items.find(x => x.id === id);
+  pending = id;
+  $('#claimText').textContent = `Je streept “${it.titel}” af, zodat niemand anders het ook koopt. ${data.naam} ziet dit niet.`;
+  $('#claimName').value = store.get('name', '');
+  $('#dlgClaim').showModal();
+}
+$('#claimCancel').onclick = () => $('#dlgClaim').close();
+$('#claimOk').onclick = async () => {
+  const btn = $('#claimOk'); btn.disabled = true;
+  const name = $('#claimName').value.trim(); store.set('name', name);
+  try {
+    const r = await fetch(`${API}/claim`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ list, item: pending, name }) });
+    const j = await r.json();
+    if (r.ok) {
+      const mine = store.get('mine', {}); mine[list + '/' + pending] = j.token; store.set('mine', mine);
+      toast('Afgestreept! 🎁');
+    } else toast(j.error === 'al afgestreept' ? 'Net iemand anders je voor…' : (j.error || 'Dat ging mis'));
+  } catch { toast('Geen verbinding, probeer het nog eens'); }
+  btn.disabled = false; $('#dlgClaim').close(); refresh();
+};
+
+async function unclaim(id, btn) {
+  const mine = store.get('mine', {}); const key = list + '/' + id;
+  btn.disabled = true;
+  try {
+    const r = await fetch(`${API}/unclaim`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ list, item: id, token: mine[key] }) });
+    if (r.ok) { delete mine[key]; store.set('mine', mine); toast('Weer vrijgegeven'); }
+    else toast('Kon niet vrijgeven');
+  } catch { toast('Geen verbinding'); }
+  refresh();
+}
+
+$('#share').onclick = async () => {
+  const url = location.origin + location.pathname + '#' + list;
+  const text = `Verlanglijst van ${data?.naam || ''}`;
+  if (navigator.share) { try { await navigator.share({ title: text, url }); } catch {} }
+  else { try { await navigator.clipboard.writeText(url); toast('Link gekopieerd'); } catch { prompt('Kopieer de link:', url); } }
+};
+
+document.addEventListener('visibilitychange', () => { if (!document.hidden && list) refresh(); });
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+boot();
+</script>
+</body>
+</html>

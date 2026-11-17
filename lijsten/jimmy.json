@@ -1,0 +1,10 @@
+{
+  "naam": "Jimmy",
+  "titel": "Verlanglijst van Jimmy",
+  "intro": "Hier staat wat ik graag zou krijgen. Streep af wat jij geeft, dan krijg ik niks dubbel. Ik zie zelf niet wat er al gekocht is.",
+  "items": [
+    { "id": "voorbeeld-1", "titel": "Cadeaubon", "omschrijving": "Voorbeeld: hier komt een echte wens te staan.", "prijs": "€ 25", "link": "", "afbeelding": "", "prio": 1, "voorbeeld": true },
+    { "id": "voorbeeld-2", "titel": "Een goed boek", "omschrijving": "Voorbeeld om het afstrepen te testen.", "prijs": "± € 20", "link": "", "afbeelding": "", "prio": 2, "voorbeeld": true },
+    { "id": "voorbeeld-3", "titel": "Iets voor in de studio", "omschrijving": "Voorbeeld met een link naar de winkel.", "prijs": "€ 40", "link": "https://www.bol.com", "afbeelding": "", "prio": 3, "voorbeeld": true }
+  ]
+}
