@@ -101,6 +101,26 @@
       "link": "https://upgraderc.be/products/mould-king-10213-motorized-s55-inline-6-engine-building-blocks-744-stukken",
       "afbeelding": "https://cdn.shopify.com/s/files/1/0626/0640/9944/files/Sfba964b53a4148bb9e1c7f42482f70eei.webp?v=1782976579",
       "prio": 2
+    },
+    {
+      "id": "lego-60501-achtbaan",
+      "titel": "LEGO City Lava Land achtbaanpark (60501)",
+      "omschrijving": "Achtbaan van 1.165 stukjes: lanceer de karretjes vanaf de top van de vulkaan en zie ze door een looping razen. Met zweefmolen erbij.",
+      "prijs": "€ 99,99",
+      "winkel": "Prijsvergelijker (3 winkels)",
+      "link": "https://brickfact.com/nl-nl/sets/lego-city-lava-land-achtbaanpark-60501",
+      "afbeelding": "https://image-cdn.brickfact.com/set-images-fit-without-alpha/60501_1_fit.webp",
+      "prio": 3
+    },
+    {
+      "id": "mould-king-pneumatische-verreiker",
+      "titel": "Mould King pneumatische verreiker (803 stukjes)",
+      "omschrijving": "Technische bouwset met échte luchtdruk: pomp lucht in het systeem en de giek tilt en schuift uit via pneumatische cilinders.",
+      "prijs": "€ 81,99",
+      "winkel": "UpgradeRC",
+      "link": "https://upgraderc.be/products/pneumatic-telehandler-model-building-blocks-803-stukken",
+      "afbeelding": "https://cdn.shopify.com/s/files/1/0626/0640/9944/files/pneumatic-telehandler-model-building-blocks-803-stukken-upgraderc-mould-king-1.jpg?v=1782880056",
+      "prio": 3
     }
   ]
 }
