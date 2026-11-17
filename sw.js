@@ -1,5 +1,5 @@
 // Netwerk eerst (lijst moet altijd actueel zijn), cache als vangnet bij geen verbinding.
-const C = 'cadeau-v1';
+const C = 'cadeau-v2';
 self.addEventListener('install', e => { self.skipWaiting(); e.waitUntil(caches.open(C).then(c => c.addAll(['./', 'index.html', 'manifest.webmanifest', 'icons/icon.svg']))); });
 self.addEventListener('activate', e => e.waitUntil(self.clients.claim()));
 self.addEventListener('fetch', e => {

@@ -95,6 +95,7 @@ dialog .row{display:flex;gap:10px}
   <div id="banner"></div>
   <main class="grid" id="grid"></main>
 
+  <p style="text-align:center;margin-top:28px"><button class="btn g sm" id="whoSwitch" hidden></button></p>
   <footer>Powered by <b>LEDJOCKEY</b></footer>
 </div>
 
@@ -190,6 +191,8 @@ function render() {
     ? `<div class="banner"><span>🎁 <b>Verrassingsmodus</b> — je ziet niet wat er al is afgestreept.</span><span class="sp"></span><button class="btn g sm" id="toGuest">Ik ben niet ${esc(data.naam)}</button></div>`
     : '';
   const tg = $('#toGuest'); if (tg) tg.onclick = () => setMode('guest');
+  $('#whoSwitch').hidden = owner;
+  $('#whoSwitch').textContent = `Ben jij ${data.naam}? Verberg wat er al gekocht is`;
 
   if (!items.length) { $('#grid').innerHTML = '<div class="empty">De lijst wordt nog gevuld. Kom snel terug!</div>'; return; }
 
@@ -231,6 +234,7 @@ function openClaim(id) {
   $('#claimName').value = store.get('name', '');
   $('#dlgClaim').showModal();
 }
+$('#whoSwitch').onclick = () => { setMode('owner'); window.scrollTo({ top: 0, behavior: 'smooth' }); };
 $('#claimCancel').onclick = () => $('#dlgClaim').close();
 $('#claimOk').onclick = async () => {
   const btn = $('#claimOk'); btn.disabled = true;
