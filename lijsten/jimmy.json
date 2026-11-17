@@ -81,6 +81,26 @@
       "link": "https://brickfact.com/nl-nl/sets/lego-technic-volvo-ec500-hybrid-graafmachine-42215",
       "afbeelding": "https://image-cdn.brickfact.com/set-images-fit-without-alpha/42215_1_fit.webp",
       "prio": 1
+    },
+    {
+      "id": "cada-graafmachine-1702",
+      "titel": "CaDA graafmachine (C61082W, 1702 stukjes)",
+      "omschrijving": "Technische bouwset van een JCB-graafmachine op schaal 1:20, zo'n 75 cm lang. Arm, bak en rupsen bedien je met draaiknoppen; later uit te breiden met een motor-/afstandsbedieningsset (apart).",
+      "prijs": "€ 99,90",
+      "winkel": "Kidero (+ verzending vanaf € 5,90)",
+      "link": "https://kidero.be/en/product/289929-cada-bausteine-grosser-funktionaler-kettenbagger-1-20-1702-teile",
+      "afbeelding": "https://cdn.shopify.com/s/files/1/0626/0640/9944/files/graafmachine-1702-stukken-upgraderc-cada-1.jpg?v=1782861561",
+      "prio": 2
+    },
+    {
+      "id": "mould-king-motor-10213",
+      "titel": "Mould King motorblok met motortje (10213, 744 stukjes)",
+      "omschrijving": "Bouw een 6-cilinder lijnmotor na die écht draait: aanzetten en je ziet zuigers, krukas en riemen bewegen. Een 'machine-machine' om op de kast te zetten.",
+      "prijs": "€ 65,99",
+      "winkel": "UpgradeRC",
+      "link": "https://upgraderc.be/products/mould-king-10213-motorized-s55-inline-6-engine-building-blocks-744-stukken",
+      "afbeelding": "https://cdn.shopify.com/s/files/1/0626/0640/9944/files/Sfba964b53a4148bb9e1c7f42482f70eei.webp?v=1782976579",
+      "prio": 2
     }
   ]
 }
