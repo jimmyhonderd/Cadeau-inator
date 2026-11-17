@@ -3,9 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Cadeau-inator · LEDJOCKEY</title>
-<meta name="description" content="Verlanglijst met afstrepen — powered by LEDJOCKEY">
+<title>Verlanglijst · Jimmy Honderd</title>
+<meta name="description" content="Mijn verlanglijst — streep af wat jij geeft">
 <meta name="theme-color" content="#050505">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
@@ -14,21 +16,22 @@
 <meta property="og:image" content="icons/icon-512.png">
 <style>
 :root{
-  --y:#E9B400; --y2:#ffcf33; --bg:#050505; --panel:#0e0e0e; --line:#1d1d1d; --txt:#f2f2f2; --dim:#9a9a9a;
-  --font:"Myriad Pro",Myriad,"Segoe UI","Helvetica Neue",system-ui,sans-serif;
+  --y:#ff9a1f; --y2:#ffb24d; --glow:#ff6a00; --bg:#070605; --panel:rgba(14,11,9,.92); --line:#2a211a; --txt:#f2f2f2; --dim:#9a9a9a;
+  --font:Gotham,"Montserrat","Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--txt);font-family:var(--font);-webkit-font-smoothing:antialiased}
-body{min-height:100vh;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cg fill='none' stroke='%23E9B400' stroke-opacity='.07' stroke-width='2'%3E%3Cpath d='M0 40h60l20 20h80M240 40h-40M120 0v30l20 20v50l-20 20v120M0 160h40l20-20h60M240 200h-70l-20-20v-40M200 0v80l20 20h20'/%3E%3C/g%3E%3Cg fill='%23E9B400' fill-opacity='.10'%3E%3Ccircle cx='160' cy='60' r='5'/%3E%3Ccircle cx='60' cy='140' r='5'/%3E%3Ccircle cx='120' cy='30' r='4'/%3E%3Ccircle cx='150' cy='140' r='5'/%3E%3Ccircle cx='220' cy='100' r='4'/%3E%3C/g%3E%3C/svg%3E");background-attachment:fixed}
+body{min-height:100vh;background:radial-gradient(ellipse at 50% 0%,rgba(255,106,0,.10),transparent 60%),radial-gradient(ellipse at center,transparent 40%,rgba(0,0,0,.85) 100%),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='80' viewBox='0 0 160 80'%3E%3Crect width='160' height='80' fill='%23050404'/%3E%3Cg fill='%23120f0d' stroke='%232b2621' stroke-width='2'%3E%3Crect x='2' y='2' width='76' height='36' rx='3'/%3E%3Crect x='82' y='2' width='76' height='36' rx='3'/%3E%3Crect x='-38' y='42' width='76' height='36' rx='3'/%3E%3Crect x='42' y='42' width='76' height='36' rx='3'/%3E%3Crect x='122' y='42' width='76' height='36' rx='3'/%3E%3C/g%3E%3C/svg%3E");background-attachment:fixed}
 a{color:var(--y)}
 .wrap{max-width:1100px;margin:0 auto;padding:22px 18px 80px}
 header{display:flex;align-items:center;gap:12px;margin-bottom:26px}
-header svg{width:38px;height:38px;flex:none}
-.brand{font-weight:700;letter-spacing:.14em;font-size:13px;color:var(--y);text-transform:uppercase}
+
+.brand{font-weight:800;letter-spacing:.22em;font-size:14px;color:#ffd9a8;text-transform:uppercase;text-shadow:0 0 4px var(--glow),0 0 12px var(--glow),0 0 24px rgba(255,106,0,.6)}
 .brand small{display:block;color:var(--dim);letter-spacing:.08em;font-weight:400;font-size:11px;margin-top:2px}
 .share{margin-left:auto}
 h1{font-size:clamp(34px,7vw,64px);line-height:.95;margin:0 0 10px;text-transform:uppercase;letter-spacing:-.01em}
-h1 span{color:var(--y)}
+h1{font-weight:800}
+h1 span{color:#ffe2bd;text-shadow:0 0 3px #fff3,0 0 8px var(--y),0 0 18px var(--glow),0 0 38px var(--glow),0 0 70px rgba(255,106,0,.55)}
 .intro{color:var(--dim);max-width:640px;font-size:17px;line-height:1.45;margin:0 0 18px}
 .stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px}
 .pill{border:1px solid var(--line);background:#0b0b0b;border-radius:999px;padding:6px 12px;font-size:13px;color:var(--dim)}
@@ -37,8 +40,8 @@ h1 span{color:var(--y)}
 .banner b{color:var(--y)}
 .banner .sp{flex:1}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
-.card{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:transform .15s,border-color .15s}
-.card:hover{border-color:#2c2c2c;transform:translateY(-2px)}
+.card{position:relative;background:var(--panel);backdrop-filter:blur(2px);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:transform .15s,border-color .15s}
+.card:hover{border-color:#5a3410;box-shadow:0 0 24px rgba(255,106,0,.15);transform:translateY(-2px)}
 .card .img{aspect-ratio:4/3;background:#090909;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--line);overflow:hidden}
 .card .img img{width:100%;height:100%;object-fit:contain;background:#fff}
 .card .img svg{width:64px;height:64px;opacity:.35}
@@ -46,7 +49,7 @@ h1 span{color:var(--y)}
 .card h3{margin:0;font-size:19px;line-height:1.2}
 .card p{margin:0;color:var(--dim);font-size:14px;line-height:1.4}
 .meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:auto;padding-top:6px}
-.price{background:var(--y);color:#000;font-weight:700;border-radius:8px;padding:3px 9px;font-size:14px}
+.price{background:var(--y);color:#1a0d00;font-weight:700;border-radius:8px;padding:3px 9px;font-size:14px}
 .tag{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--y);border:1px solid #3a2f00;border-radius:6px;padding:2px 7px}
 .shop{font-size:14px;text-decoration:none;margin-left:auto}
 .shop:hover{text-decoration:underline}
@@ -54,18 +57,18 @@ h1 span{color:var(--y)}
 .alt a{text-decoration:none}
 .alt a:hover{text-decoration:underline}
 .btn{appearance:none;border:0;border-radius:12px;padding:12px 14px;font:inherit;font-weight:700;font-size:15px;cursor:pointer;width:100%;letter-spacing:.02em}
-.btn.y{background:var(--y);color:#000}
+.btn.y{background:linear-gradient(180deg,var(--y2),var(--y));color:#1a0d00;box-shadow:0 0 18px rgba(255,106,0,.35)}
 .btn.y:hover{background:var(--y2)}
 .btn.g{background:#191919;color:var(--txt);border:1px solid #2a2a2a}
 .btn.sm{width:auto;padding:8px 12px;font-size:13px;border-radius:10px}
 .btn:disabled{opacity:.5;cursor:default}
 .card.claimed .img,.card.claimed h3,.card.claimed p,.card.claimed .meta{opacity:.38}
 .card.claimed h3{text-decoration:line-through;text-decoration-color:var(--y);text-decoration-thickness:2px}
-.stamp{position:absolute;top:16px;right:-38px;transform:rotate(35deg);background:var(--y);color:#000;font-weight:800;font-size:12px;letter-spacing:.14em;padding:5px 46px;box-shadow:0 4px 18px #0008}
+.stamp{position:absolute;top:16px;right:-38px;transform:rotate(35deg);background:var(--y);color:#1a0d00;font-weight:800;font-size:12px;letter-spacing:.14em;padding:5px 46px;box-shadow:0 4px 18px #0008}
 .mine{font-size:14px;color:var(--y);display:flex;align-items:center;justify-content:space-between;gap:8px}
 .empty{border:1px dashed #2a2a2a;border-radius:18px;padding:40px 20px;text-align:center;color:var(--dim)}
 footer{margin-top:40px;color:#5c5c5c;font-size:12px;letter-spacing:.12em;text-transform:uppercase;text-align:center}
-footer b{color:var(--y)}
+footer b{color:#ffd9a8;text-shadow:0 0 8px var(--glow)}
 dialog{border:1px solid #2a2a2a;background:#0d0d0d;color:var(--txt);border-radius:20px;padding:22px;max-width:420px;width:calc(100% - 32px)}
 dialog::backdrop{background:#000b;backdrop-filter:blur(3px)}
 dialog h2{margin:0 0 8px;font-size:24px;text-transform:uppercase}
@@ -83,8 +86,7 @@ dialog .row{display:flex;gap:10px}
 <body>
 <div class="wrap">
   <header>
-    <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="6" width="52" height="52" rx="12" fill="#E9B400"/><path d="M26 20v24l19-12z" fill="#050505"/><g fill="#050505"><circle cx="15" cy="15" r="2.6"/><circle cx="49" cy="15" r="2.6"/><circle cx="15" cy="49" r="2.6"/><circle cx="49" cy="49" r="2.6"/></g></svg>
-    <div class="brand">Cadeau-inator<small>by LEDJOCKEY</small></div>
+    <div class="brand">Jimmy Honderd</div>
     <button class="btn g sm share" id="share">Deel lijst</button>
   </header>
 
@@ -96,7 +98,7 @@ dialog .row{display:flex;gap:10px}
   <main class="grid" id="grid"></main>
 
   <p style="text-align:center;margin-top:28px"><button class="btn g sm" id="whoSwitch" hidden></button></p>
-  <footer>Powered by <b>LEDJOCKEY</b></footer>
+  <footer>Met liefde verzameld door <b>Jimmy</b></footer>
 </div>
 
 <dialog id="dlgWho">
@@ -150,7 +152,7 @@ async function load() {
   nav.hidden = people.length < 2;
   nav.innerHTML = people.map(x => `<a href="#${esc(x.id)}" class="${x.id === list ? 'on' : ''}">${esc(x.naam)}</a>`).join('');
   data = await fetch(`lijsten/${encodeURIComponent(list)}.json`, { cache: 'no-cache' }).then(r => r.json());
-  document.title = `${data.titel || 'Verlanglijst van ' + data.naam} · Cadeau-inator`;
+  document.title = `${data.titel || 'Verlanglijst van ' + data.naam}`;
   $('#title').innerHTML = `Verlanglijst<br>van <span>${esc(data.naam)}</span>`;
   $('#intro').textContent = data.intro || '';
   mode = store.get('mode:' + list, null);
