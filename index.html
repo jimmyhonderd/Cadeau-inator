@@ -196,7 +196,7 @@ function render() {
   $('#grid').innerHTML = items.map(i => {
     const isClaimed = !owner && !!claimed[i.id];
     const isMine = !!mine[list + '/' + i.id];
-    const img = i.afbeelding ? `<img src="${esc(i.afbeelding)}" alt="" loading="lazy" onerror="this.replaceWith(document.createRange().createContextualFragment(gift))">` : gift;
+    const img = i.afbeelding ? `<img src="${esc(i.afbeelding)}" alt=""${i.uitsnede ? ` style="object-fit:cover;object-position:${esc(i.uitsnede)}"` : ''} loading="lazy" onerror="this.replaceWith(document.createRange().createContextualFragment(gift))">` : gift;
     let action = '';
     if (!owner) {
       if (isClaimed && isMine) action = `<div class="mine"><span>✓ Jij geeft dit</span><button class="btn g sm" data-un="${esc(i.id)}">Toch niet</button></div>`;
