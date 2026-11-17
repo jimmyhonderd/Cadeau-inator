@@ -50,6 +50,9 @@ h1 span{color:var(--y)}
 .tag{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--y);border:1px solid #3a2f00;border-radius:6px;padding:2px 7px}
 .shop{font-size:14px;text-decoration:none;margin-left:auto}
 .shop:hover{text-decoration:underline}
+.alt{font-size:13px;color:var(--dim)}
+.alt a{text-decoration:none}
+.alt a:hover{text-decoration:underline}
 .btn{appearance:none;border:0;border-radius:12px;padding:12px 14px;font:inherit;font-weight:700;font-size:15px;cursor:pointer;width:100%;letter-spacing:.02em}
 .btn.y{background:var(--y);color:#000}
 .btn.y:hover{background:var(--y2)}
@@ -209,8 +212,9 @@ function render() {
         <div class="meta">
           ${i.prijs ? `<span class="price">${esc(i.prijs)}</span>` : ''}
           ${i.voorbeeld ? '<span class="tag">Voorbeeld</span>' : ''}
-          ${i.link ? `<a class="shop" href="${esc(i.link)}" target="_blank" rel="noopener">Bekijk ›</a>` : ''}
+          ${i.link ? `<a class="shop" href="${esc(i.link)}" target="_blank" rel="noopener">${esc(i.winkel ? i.winkel + ' ›' : 'Bekijk ›')}</a>` : ''}
         </div>
+        ${(i.ook||[]).length ? `<div class="alt">Ook bij: ${i.ook.map(o => `<a href="${esc(o.link)}" target="_blank" rel="noopener">${esc(o.winkel)}${o.prijs ? ' (' + esc(o.prijs) + ')' : ''}</a>`).join(' · ')}</div>` : ''}
         ${action}
       </div>
     </article>`;

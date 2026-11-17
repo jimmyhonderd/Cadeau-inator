@@ -1,10 +1,44 @@
 {
   "naam": "Jimmy",
   "titel": "Verlanglijst van Jimmy",
-  "intro": "Hier staat wat ik graag zou krijgen. Streep af wat jij geeft, dan krijg ik niks dubbel. Ik zie zelf niet wat er al gekocht is.",
+  "intro": "Hier staat wat ik graag zou krijgen. Streep af wat jij geeft, dan krijg ik niks dubbel. Ik zie zelf niet wat er al gekocht is. Prijzen zijn indicaties en kunnen per winkel verschillen.",
   "items": [
-    { "id": "voorbeeld-1", "titel": "Cadeaubon", "omschrijving": "Voorbeeld: hier komt een echte wens te staan.", "prijs": "€ 25", "link": "", "afbeelding": "", "prio": 1, "voorbeeld": true },
-    { "id": "voorbeeld-2", "titel": "Een goed boek", "omschrijving": "Voorbeeld om het afstrepen te testen.", "prijs": "± € 20", "link": "", "afbeelding": "", "prio": 2, "voorbeeld": true },
-    { "id": "voorbeeld-3", "titel": "Iets voor in de studio", "omschrijving": "Voorbeeld met een link naar de winkel.", "prijs": "€ 40", "link": "https://www.bol.com", "afbeelding": "", "prio": 3, "voorbeeld": true }
+    {
+      "id": "iron-maiden-rum",
+      "titel": "Iron Maiden – The Rum of the Ancient Mariner",
+      "omschrijving": "Donkere Caribische rum (Jamaica & Barbados), 70cl, 40%. Tonen van pure chocola, vanille en eik.",
+      "prijs": "± € 31",
+      "winkel": "RumX (voordeligst, levert in NL)",
+      "link": "https://rumx.com/en/rums/26092/iron-maiden-the-rum-of-the-ancient-mariner/",
+      "ook": [
+        { "winkel": "Slijterij d'r Bij", "prijs": "€ 46,99", "link": "https://shop.slijterijdrbij.nl/iron-maiden-the-rum-of-the-ancient-mariner.html" }
+      ],
+      "afbeelding": "",
+      "prio": 1
+    },
+    {
+      "id": "demons-share-6",
+      "titel": "The Demon's Share 6 Years",
+      "omschrijving": "Gekruide, donkere rum uit Panama, 70cl, 40%. Vanille, warme specerijen, citrus en een vleugje leer.",
+      "prijs": "± € 25,50",
+      "winkel": "DrankStunter",
+      "link": "https://drankstunter.nl/product/the-demons-share-6-years-old-70cl/",
+      "ook": [
+        { "winkel": "DrankDozijn", "prijs": "€ 31,95", "link": "https://drankdozijn.nl/artikel/fles-the-demons-share-6-years-70cl" },
+        { "winkel": "Gall & Gall", "prijs": "€ 33,99", "link": "https://www.gall.nl/the-demons-share-6-years-old-70cl-474592.html" }
+      ],
+      "afbeelding": "",
+      "prio": 2
+    },
+    {
+      "id": "bacardi-spiced",
+      "titel": "Bacardí Spiced (voorheen Oakheart)",
+      "omschrijving": "Gekruide rum uit eikenhouten vaten met een rokerig randje, 70cl. Oakheart heet tegenwoordig Bacardí Spiced.",
+      "prijs": "± € 16–19",
+      "winkel": "Gall & Gall",
+      "link": "https://www.gall.nl/bacardi-spiced-70cl-768766.html",
+      "afbeelding": "",
+      "prio": 3
+    }
   ]
 }
